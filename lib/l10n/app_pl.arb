@@ -1,0 +1,31 @@
+{
+  "language" : "Polski",
+  "@language" : {
+    "description" : "Język systemu"
+  },
+
+  "test_message" : "Cześć {username}",
+  "@test_message" : {
+    "description" : "Wiadomość powitalna z argumentami",
+    "placeholders" : {
+      "username" : {
+        "type" : "String"
+      }
+    }
+  },
+  "name_error_message" : "Pole powinno zawierać co najmniej 1 literę oraz nie może: zawierać znaków specjalnych, być puste",
+  "amount_error_message" : "Pole nie może: zawierać znaków specjalnych, być puste, być równe 0",
+  "shopping_lists" : "Listy zakupów",
+  "details" : "Szczegóły",
+  "archived_shopping_lists" : "Zarchiwizowane listy",
+  "shopping_list_adding_dialog_title" : "Dodaj nową listę zakupów",
+  "shopping_list_name" : "Nazwa listy zakupów",
+  "grocery_adding_dialog_title" : "Dodaj nowy produkt",
+  "grocery_name" : "Nazwa produktu",
+  "grocery_amount" : "Ilość",
+  "add" : "DODAJ",
+  "empty_list_message" : "List jest pusta, dodaj coś do niej :)",
+  "error_list_message" : "Coś poszło nie tak :(",
+  "offline_message" : "Nie masz dostępu do internetu, może to spowodować brak dostępu do niektorych funkcji aplikacji",
+  "dismiss" : "Schowaj"
+}

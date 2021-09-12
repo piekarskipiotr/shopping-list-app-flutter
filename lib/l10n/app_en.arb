@@ -1,0 +1,32 @@
+{
+  "language" : "English",
+  "@language" : {
+    "description" : "System language"
+  },
+
+  "test_message" : "Hello {username}",
+  "@test_message" : {
+    "description" : "Hello message with args",
+    "placeholders" : {
+      "username" : {
+        "type" : "String"
+      }
+    }
+  },
+
+  "name_error_message" : "Field should contain at least 1 letter and cannot: contain special characters, be empty",
+  "amount_error_message" : "Field cannot: contain special characters, be empty, be equal to 0",
+  "shopping_lists" : "Shopping lists",
+  "details" : "Details",
+  "archived_shopping_lists" : "Archived lists",
+  "shopping_list_adding_dialog_title" : "Add new shopping list",
+  "shopping_list_name" : "Shopping list name",
+  "grocery_adding_dialog_title" : "Add new grocery",
+  "grocery_name" : "Grocery name",
+  "grocery_amount" : "Amount",
+  "add" : "ADD",
+  "empty_list_message" : "List is empty, add something to it :)",
+  "error_list_message" : "Something went wrong :(",
+  "offline_message" : "You don't have access to the Internet, it may result in the lack of access to some functions of the application",
+  "dismiss" : "Dismiss"
+}
