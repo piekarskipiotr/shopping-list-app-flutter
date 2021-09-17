@@ -4,7 +4,7 @@ import 'package:shopping_list_app_flutter/data/entities/shopping_list.dart';
 @dao
 abstract class ShoppingListDao {
   @Query('SELECT * FROM shoppingList WHERE id = :id')
-  Future<List<ShoppingList>> getShoppingListById(int id);
+  Future<ShoppingList?> getShoppingListById(int id);
 
   @Query('SELECT * FROM shoppingList WHERE isArchived = :isArchived')
   Future<List<ShoppingList>> getShoppingListByArchivedStatus(bool isArchived);

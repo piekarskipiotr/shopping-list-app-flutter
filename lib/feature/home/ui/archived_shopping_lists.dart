@@ -7,16 +7,27 @@ import 'package:shopping_list_app_flutter/feature/home/bloc/archived_shopping_li
 import 'package:shopping_list_app_flutter/feature/home/ui/shopping_list_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ArchivedShoppingLists extends StatelessWidget {
+class ArchivedShoppingLists extends StatefulWidget {
   const ArchivedShoppingLists({Key? key}) : super(key: key);
 
   @override
+  _ArchivedShoppingListsState createState() => _ArchivedShoppingListsState();
+}
+
+class _ArchivedShoppingListsState extends State<ArchivedShoppingLists> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    BlocProvider.of<ArchivedShoppingListBloc>(context).getShoppingLists();
+
     return Container(
       child: BlocBuilder<ArchivedShoppingListBloc, ArchivedShoppingListState>(
         builder: (context, state) {
+          super.build(context);
+
           if (state is LoadingLists) {
+            BlocProvider.of<ArchivedShoppingListBloc>(context).getShoppingLists();
             return _buildLoadingView();
           } else if (state is ListsLoaded) {
             final shoppingLists = state.shoppingList;
@@ -57,6 +68,7 @@ class ArchivedShoppingLists extends StatelessWidget {
 
   Widget _buildListView(List<ShoppingList> data) {
     return ListView.separated(
+      physics: BouncingScrollPhysics(),
       itemCount: data.length,
       itemBuilder: (context, index) {
         return ShoppingListItem(
@@ -87,3 +99,4 @@ class ArchivedShoppingLists extends StatelessWidget {
     );
   }
 }
+

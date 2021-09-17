@@ -5,32 +5,24 @@ import 'package:shopping_list_app_flutter/feature/home/bloc/add_delete_shopping_
 import 'package:shopping_list_app_flutter/feature/home/ui/archived_shopping_lists.dart';
 import 'package:shopping_list_app_flutter/feature/home/ui/shopping_list_form.dart';
 import 'package:shopping_list_app_flutter/feature/home/ui/shopping_lists.dart';
-import 'package:shopping_list_app_flutter/network/api_service.dart';
 import 'package:shopping_list_app_flutter/network/network_listener.dart';
 import 'package:shopping_list_app_flutter/theme/app_theme.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NetworkListener(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: _buildAppBar(),
+        appBar: _buildAppBar(context),
         body: _buildTabViews(),
-        floatingActionButton: _buildFloatingActionButton(),
+        floatingActionButton: _buildFloatingActionButton(context),
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar() {
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
       title: Text(
         AppLocalizations.of(context)!.shopping_lists,
@@ -59,32 +51,28 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildFloatingActionButton() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 20.0, bottom: 30.0),
-      child: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(14.0),
-                    topLeft: Radius.circular(14.0)),
+  Widget _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(14.0),
+                  topLeft: Radius.circular(14.0)),
+            ),
+            builder: (context) => SingleChildScrollView(
+              child: BlocProvider.value(
+                value:
+                BlocProvider.of<AddDeleteShoppingListBloc>(context),
+                child: ShoppingListForm(),
               ),
-              builder: (context) => SingleChildScrollView(
-                    child: BlocProvider.value(
-                      value:
-                          BlocProvider.of<AddDeleteShoppingListBloc>(context),
-                      child: ShoppingListForm(),
-                    ),
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).viewInsets.bottom),
-                  ));
-        },
-        tooltip: 'Add new shopping list',
-        child: Icon(Icons.add, color: Colors.white),
-      ),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+            ));
+      },
+      child: Icon(Icons.add, color: Colors.white),
     );
   }
 }

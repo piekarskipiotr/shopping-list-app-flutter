@@ -7,23 +7,31 @@ import 'package:shopping_list_app_flutter/feature/home/bloc/shopping_list_state.
 import 'package:shopping_list_app_flutter/feature/home/ui/shopping_list_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ShoppingLists extends StatelessWidget {
-  const ShoppingLists({Key? key}) : super(key: key);
+class ShoppingLists extends StatefulWidget {
+
+  @override
+  _ShoppingListsState createState() => _ShoppingListsState();
+}
+
+class _ShoppingListsState extends State<ShoppingLists> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<ShoppingListBloc>(context).getShoppingLists();
-
+    final _bloc = BlocProvider.of<ShoppingListBloc>(context);
     return Container(
       child: BlocBuilder<ShoppingListBloc, ShoppingListState>(
         builder: (context, state) {
+          super.build(context);
           if (state is LoadingLists) {
+            _bloc.getShoppingLists();
             return _buildLoadingView();
           } else if (state is ListsLoaded) {
             final shoppingLists = state.shoppingList;
 
             if (shoppingLists.isNotEmpty)
-              return _buildListView(shoppingLists);
+              return _buildListView(shoppingLists, _bloc);
             else
               return _buildEmptyListView(context);
 
@@ -49,15 +57,19 @@ class ShoppingLists extends StatelessWidget {
           SizedBox(
               width: 256,
               height: 256,
-              child: SvgPicture.asset("assets/images/empty_image.svg")),
+              child: SvgPicture.asset("assets/images/empty_image.svg")
+          ),
           Text(AppLocalizations.of(context)!.empty_list_message, style: TextStyle(fontSize: 18.0),),
         ],
       ),
     );
   }
 
-  Widget _buildListView(List<ShoppingList> data) {
-    return ListView.separated(
+  Widget _buildListView(List<ShoppingList> data, ShoppingListBloc bloc) {
+    return BlocProvider.value(
+      value: bloc,
+      child: ListView.separated(
+        physics: BouncingScrollPhysics(),
         itemCount: data.length,
         itemBuilder: (context, index) {
           return ShoppingListItem(
@@ -69,6 +81,7 @@ class ShoppingLists extends StatelessWidget {
             height: 1.0,
           );
         },
+      ),
     );
   }
 

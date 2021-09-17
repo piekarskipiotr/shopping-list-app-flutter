@@ -6,6 +6,7 @@ part of 'app_database.dart';
 // FloorGenerator
 // **************************************************************************
 
+// ignore: avoid_classes_with_only_static_members
 class $FloorAppDatabase {
   /// Creates a database builder for a persistent database.
   /// Once a database is built, you should keep a reference to it and re-use it.
@@ -154,8 +155,8 @@ class _$ShoppingListDao extends ShoppingListDao {
   final DeletionAdapter<ShoppingList> _shoppingListDeletionAdapter;
 
   @override
-  Future<List<ShoppingList>> getShoppingListById(int id) async {
-    return _queryAdapter.queryList('SELECT * FROM shoppingList WHERE id = ?1',
+  Future<ShoppingList?> getShoppingListById(int id) async {
+    return _queryAdapter.query('SELECT * FROM shoppingList WHERE id = ?1',
         mapper: (Map<String, Object?> row) => ShoppingList(
             id: row['id'] as int?,
             name: row['name'] as String,

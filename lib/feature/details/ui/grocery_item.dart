@@ -1,10 +1,9 @@
-import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shopping_list_app_flutter/data/entities/grocery.dart';
 import 'package:shopping_list_app_flutter/feature/details/bloc/add_edit_delete_grocery_bloc.dart';
 import 'package:shopping_list_app_flutter/feature/details/bloc/add_edit_delete_grocery_state.dart';
+import 'package:shopping_list_app_flutter/theme/app_colors.dart';
 
 class GroceryItem extends StatelessWidget {
   GroceryItem({Key? key, required this.grocery, required this.isArchived})
@@ -29,17 +28,16 @@ class GroceryItem extends StatelessWidget {
   }
 
   Widget _buildItem(BuildContext context, Grocery grocery) {
-    return Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        secondaryActions: <Widget>[
-          if (!isArchived)
-            IconSlideAction(
-                caption: 'Delete',
-                color: Colors.red,
-                icon: Icons.delete,
-                onTap: () => _bloc .deleteGrocery(grocery)
-            ),
-        ],
+    return Dismissible(
+      key: UniqueKey(),
+      direction: isArchived ? DismissDirection.none : DismissDirection.endToStart,
+      onDismissed: (direction) => _bloc.deleteGrocery(grocery),
+      background: Container(
+        alignment: Alignment.centerRight,
+        color: AppColors.RED,
+        padding: EdgeInsets.only(right: 25.0),
+        child: Icon(Icons.delete, color: Colors.white),
+      ),
         child: ListTile(
           onTap: () {
             if (!isArchived)
@@ -55,7 +53,7 @@ class GroceryItem extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   decoration:
-                      grocery.isDone ? TextDecoration.lineThrough : null)),
+                  grocery.isDone ? TextDecoration.lineThrough : null)),
           subtitle: Text(
             'X${grocery.amount}',
             style: TextStyle(
@@ -66,6 +64,7 @@ class GroceryItem extends StatelessWidget {
                   ? Icons.check_circle
                   : Icons.check_circle_outline_rounded,
               color: Theme.of(context).primaryColor),
-        ));
+        ),
+    );
   }
 }

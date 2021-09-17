@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_list_app_flutter/data/entities/shopping_list.dart';
 import 'package:shopping_list_app_flutter/data/repositories/grocery_repository.dart';
@@ -16,8 +15,7 @@ class ShoppingListBloc extends Cubit<ShoppingListState> {
 
   final AddDeleteShoppingListBloc addDeleteBloc;
   late StreamSubscription addDeleteBlocSubscription;
-
-  ShoppingListBloc(this.addDeleteBloc) : super(LoadingLists()) {
+  ShoppingListBloc(this.addDeleteBloc) : super(ShoppingListBlocInitState()) {
     addDeleteBlocSubscription = addDeleteBloc.stream.listen((addDeleteState) {
       if (addDeleteState is ShoppingListDeleted)
         getShoppingLists();
@@ -27,31 +25,29 @@ class ShoppingListBloc extends Cubit<ShoppingListState> {
 
   Future<void> getShoppingLists() async {
     emit(LoadingLists());
-    final shoppingLists =
-        await _shoppingListRepository.getShoppingListByArchivedStatus(false);
+    final shoppingLists = await _shoppingListRepository.getShoppingListByArchivedStatus(false);
     emit(ListsLoaded(shoppingLists));
   }
 
   Future<void> getShoppingListsFromApi() async {
     emit(LoadingLists());
     await ApiService().fetchShoppingList().then((value) {
-      if (value != null) emit(ListsLoaded(value));
-
+      emit(ListsLoaded(value));
     });
   }
 
-  Future<void> checkIfGroceriesDone() async {
-    final shoppingLists =
-        await _shoppingListRepository.getShoppingListByArchivedStatus(false);
-    for (ShoppingList e in shoppingLists) {
-      if (e.amountOfAllGroceries == e.amountOfDoneGroceries &&
-          e.amountOfAllGroceries > 0) {
-        e = e.copyWith(isArchived: true);
-        _shoppingListRepository.updateShoppingList(e);
+  Future<void> checkIfGroceriesDone(int shoppingListId) async {
+    ShoppingList? shoppingList = await _shoppingListRepository.getShoppingListById(shoppingListId);
+    if (shoppingList != null) {
+      if (shoppingList.amountOfAllGroceries ==
+          shoppingList.amountOfDoneGroceries &&
+          shoppingList.amountOfAllGroceries > 0) {
+        shoppingList = shoppingList.copyWith(isArchived: true);
+        await _shoppingListRepository.updateShoppingList(shoppingList);
       }
-    }
 
-    getShoppingLists();
+      getShoppingLists();
+    }
   }
 
   Future<void> deleteShoppingListAndGroceries(ShoppingList shoppingList) async {
@@ -64,5 +60,13 @@ class ShoppingListBloc extends Cubit<ShoppingListState> {
   Future<void> close() {
     addDeleteBlocSubscription.cancel();
     return super.close();
+  }
+
+
+
+  @override
+  void onChange(Change<ShoppingListState> change) {
+    print('shopping_list_bloc: $change');
+    super.onChange(change);
   }
 }

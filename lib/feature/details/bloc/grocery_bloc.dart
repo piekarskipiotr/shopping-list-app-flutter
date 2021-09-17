@@ -7,9 +7,9 @@ import 'package:shopping_list_app_flutter/feature/details/bloc/add_edit_delete_g
 import 'grocery_state.dart';
 
 class GroceryBloc extends Cubit<GroceryState> {
-  final _groceryRepository = injection<GroceryRepository>();
   final AddEditDeleteGroceryBloc addEditDeleteGroceryBloc;
   late StreamSubscription addEditDeleteBlocSubscription;
+  var _groceryRepository = injection<GroceryRepository>();
 
   GroceryBloc(this.addEditDeleteGroceryBloc) : super(LoadingLists()) {
     addEditDeleteBlocSubscription = addEditDeleteGroceryBloc.stream.listen((addEditDeleteState) {

@@ -1,18 +1,16 @@
 import 'package:shopping_list_app_flutter/data/entities/shopping_list.dart';
-import 'package:shopping_list_app_flutter/network/api_service.dart';
 import '../app_database.dart';
 
 class ShoppingListRepository {
   AppDatabase _database;
   ShoppingListRepository(this._database);
 
-  Future<List<ShoppingList>> getShoppingListById(int id) async {
+  Future<ShoppingList?> getShoppingListById(int id) async {
     return await _database.shoppingListDao.getShoppingListById(id);
   }
 
   Future<List<ShoppingList>> getShoppingListByArchivedStatus(bool isArchived) async {
-    return await _database.shoppingListDao.getShoppingListByArchivedStatus(isArchived);
-    // return ApiService().fetchShoppingList();
+   return await _database.shoppingListDao.getShoppingListByArchivedStatus(isArchived);
   }
 
   Future<void> increaseShoppingListGroceriesAmount(int id) async {

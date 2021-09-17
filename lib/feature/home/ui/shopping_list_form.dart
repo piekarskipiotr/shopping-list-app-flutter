@@ -83,7 +83,7 @@ class _ShoppingListFormState extends State<ShoppingListForm> {
                 borderRadius: BorderRadius.circular(0.0),
               ))),
               child: Padding(
-                padding: const EdgeInsets.all(18.0),
+                padding: EdgeInsets.all(18.0),
                 child: Text(
                   AppLocalizations.of(context)!.add,
                   style: TextStyle(color: Colors.white),

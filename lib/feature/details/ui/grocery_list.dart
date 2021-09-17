@@ -61,6 +61,7 @@ class GroceryList extends StatelessWidget {
 
   Widget _buildListView(List<Grocery> data, BuildContext context) {
     return ListView.separated(
+      physics: BouncingScrollPhysics(),
       itemCount: data.length,
       itemBuilder: (context, index) {
         return GroceryItem(grocery: data[index], isArchived: isArchived);

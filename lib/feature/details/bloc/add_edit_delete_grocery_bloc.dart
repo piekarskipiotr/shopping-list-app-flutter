@@ -6,9 +6,9 @@ import 'package:shopping_list_app_flutter/di/injection.dart';
 import 'add_edit_delete_grocery_state.dart';
 
 class AddEditDeleteGroceryBloc extends Cubit<AddEditDeleteGroceryState> {
+  var _groceryRepository = injection<GroceryRepository>();
+  var _shoppingListRepository = injection<ShoppingListRepository>();
   AddEditDeleteGroceryBloc() : super(InitState());
-  final _groceryRepository = injection<GroceryRepository>();
-  final _shoppingListRepository = injection<ShoppingListRepository>();
 
   Future<void> addGrocery(String name, int amount, int shoppingListId) async {
     emit(AddingGrocery());

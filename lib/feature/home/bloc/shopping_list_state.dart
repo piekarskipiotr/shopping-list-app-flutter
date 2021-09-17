@@ -6,6 +6,11 @@ abstract class ShoppingListState extends Equatable {
   List<Object?> get props => [];
 }
 
+class ShoppingListBlocInitState extends ShoppingListState {
+  @override
+  String toString() => "Init state";
+}
+
 class LoadingLists extends ShoppingListState {
   @override
   String toString() => "Shopping list loading state";
