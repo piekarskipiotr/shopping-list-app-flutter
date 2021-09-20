@@ -7,7 +7,7 @@ import 'package:shopping_list_app_flutter/di/injection.dart';
 import 'package:shopping_list_app_flutter/feature/home/bloc/add_delete_shopping_list_bloc.dart';
 import 'package:shopping_list_app_flutter/feature/home/bloc/add_delete_shopping_list_state.dart';
 import 'package:shopping_list_app_flutter/feature/home/bloc/shopping_list_state.dart';
-import 'package:shopping_list_app_flutter/network/api_service.dart';
+import 'dart:developer';
 
 class ShoppingListBloc extends Cubit<ShoppingListState> {
   final _shoppingListRepository = injection<ShoppingListRepository>();
@@ -15,6 +15,7 @@ class ShoppingListBloc extends Cubit<ShoppingListState> {
 
   final AddDeleteShoppingListBloc addDeleteBloc;
   late StreamSubscription addDeleteBlocSubscription;
+
   ShoppingListBloc(this.addDeleteBloc) : super(ShoppingListBlocInitState()) {
     addDeleteBlocSubscription = addDeleteBloc.stream.listen((addDeleteState) {
       if (addDeleteState is ShoppingListDeleted)
@@ -29,18 +30,19 @@ class ShoppingListBloc extends Cubit<ShoppingListState> {
     emit(ListsLoaded(shoppingLists));
   }
 
-  Future<void> getShoppingListsFromApi() async {
-    emit(LoadingLists());
-    await ApiService().fetchShoppingList().then((value) {
-      emit(ListsLoaded(value));
-    });
-  }
+  // Future<void> getShoppingListsFromApi() async {
+  //   emit(LoadingLists());
+  //   await ApiService().fetchShoppingList().then((value) {
+  //     emit(ListsLoaded(value));
+  //   });
+  // }
 
   Future<void> checkIfGroceriesDone(int shoppingListId) async {
-    ShoppingList? shoppingList = await _shoppingListRepository.getShoppingListById(shoppingListId);
+    ShoppingList? shoppingList =
+        await _shoppingListRepository.getShoppingListById(shoppingListId);
     if (shoppingList != null) {
       if (shoppingList.amountOfAllGroceries ==
-          shoppingList.amountOfDoneGroceries &&
+              shoppingList.amountOfDoneGroceries &&
           shoppingList.amountOfAllGroceries > 0) {
         shoppingList = shoppingList.copyWith(isArchived: true);
         await _shoppingListRepository.updateShoppingList(shoppingList);
@@ -62,11 +64,9 @@ class ShoppingListBloc extends Cubit<ShoppingListState> {
     return super.close();
   }
 
-
-
   @override
   void onChange(Change<ShoppingListState> change) {
-    print('shopping_list_bloc: $change');
+    log('$change', name: '$runtimeType');
     super.onChange(change);
   }
 }

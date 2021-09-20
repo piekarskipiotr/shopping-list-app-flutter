@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shopping_list_app_flutter/core/app_localizations_helper.dart';
 import 'package:shopping_list_app_flutter/data/entities/grocery.dart';
 import 'package:shopping_list_app_flutter/feature/details/bloc/grocery_bloc.dart';
 import 'package:shopping_list_app_flutter/feature/details/bloc/grocery_state.dart';
 import 'package:shopping_list_app_flutter/feature/details/ui/grocery_item.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroceryList extends StatelessWidget {
   const GroceryList(
@@ -52,7 +52,7 @@ class GroceryList extends StatelessWidget {
               width: 256,
               height: 256,
               child: SvgPicture.asset("assets/images/empty_image.svg")),
-          Text(AppLocalizations.of(context)!.empty_list_message, style: TextStyle(fontSize: 18.0),),
+          Text(getString(context).empty_list_message, style: TextStyle(fontSize: 18.0),),
         ],
       ),
     );
@@ -83,7 +83,7 @@ class GroceryList extends StatelessWidget {
               width: 256,
               height: 256,
               child: SvgPicture.asset("assets/images/error_image.svg")),
-          Text(AppLocalizations.of(context)!.error_list_message, style: TextStyle(fontSize: 18.0),),
+          Text(getString(context).error_list_message, style: TextStyle(fontSize: 18.0),),
         ],
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopping_list_app_flutter/core/app_localizations_helper.dart';
 import 'package:shopping_list_app_flutter/data/entities/shopping_list.dart';
 import 'package:shopping_list_app_flutter/feature/details/bloc/add_edit_delete_grocery_bloc.dart';
 import 'package:shopping_list_app_flutter/feature/details/ui/grocery_form.dart';
@@ -48,7 +48,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
           },
           child: Icon(Icons.arrow_back_ios_outlined)),
       title: Text(
-        AppLocalizations.of(context)!.shopping_lists,
+        getString(context).shopping_lists,
         style: AppThemes.appBarTitleStyle,
       ),
     );

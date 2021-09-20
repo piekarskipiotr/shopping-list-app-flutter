@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:shopping_list_app_flutter/data/entities/shopping_list.dart';
 import '../app_database.dart';
 
+@singleton
 class ShoppingListRepository {
   AppDatabase _database;
   ShoppingListRepository(this._database);
@@ -11,6 +13,9 @@ class ShoppingListRepository {
 
   Future<List<ShoppingList>> getShoppingListByArchivedStatus(bool isArchived) async {
    return await _database.shoppingListDao.getShoppingListByArchivedStatus(isArchived);
+//     if (!isArchived)
+//       return ApiService().fetchShoppingList();
+//     return List.empty();
   }
 
   Future<void> increaseShoppingListGroceriesAmount(int id) async {

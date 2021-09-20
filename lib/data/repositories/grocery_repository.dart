@@ -1,6 +1,8 @@
+import 'package:injectable/injectable.dart';
 import 'package:shopping_list_app_flutter/data/entities/grocery.dart';
 import '../app_database.dart';
 
+@singleton
 class GroceryRepository {
   AppDatabase _database;
   GroceryRepository(this._database);

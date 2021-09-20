@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_list_app_flutter/data/repositories/grocery_repository.dart';
 import 'package:shopping_list_app_flutter/di/injection.dart';
@@ -32,5 +33,11 @@ class GroceryBloc extends Cubit<GroceryState> {
   Future<void> close() {
     addEditDeleteBlocSubscription.cancel();
     return super.close();
+  }
+
+  @override
+  void onChange(Change<GroceryState> change) {
+    log('$change', name: '$runtimeType');
+    super.onChange(change);
   }
 }

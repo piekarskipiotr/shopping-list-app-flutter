@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopping_list_app_flutter/core/app_localizations_helper.dart';
 import 'package:shopping_list_app_flutter/core/validators/amount_validation.dart';
 import 'package:shopping_list_app_flutter/core/validators/name_validation.dart';
 import 'package:shopping_list_app_flutter/feature/details/bloc/add_edit_delete_grocery_bloc.dart';
@@ -26,8 +26,8 @@ class _GroceryFormState extends State<GroceryForm> {
     super.initState();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _errorNameMessage = AppLocalizations.of(context)!.name_error_message;
-      _errorAmountMessage = AppLocalizations.of(context)!.amount_error_message;
+      _errorNameMessage = getString(context).name_error_message;
+      _errorAmountMessage = getString(context).amount_error_message;
     });
 
     _bloc = BlocProvider.of<AddEditDeleteGroceryBloc>(context);
@@ -57,7 +57,7 @@ class _GroceryFormState extends State<GroceryForm> {
         child: Container(
       margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
       child: Text(
-          AppLocalizations.of(context)!.grocery_adding_dialog_title,
+          getString(context).grocery_adding_dialog_title,
           style: TextStyle(fontSize: 20.0)),
     ));
   }
@@ -74,7 +74,7 @@ class _GroceryFormState extends State<GroceryForm> {
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           errorMaxLines: 5,
-          labelText: AppLocalizations.of(context)!.grocery_name,
+          labelText: getString(context).grocery_name,
           contentPadding:
               EdgeInsets.only(left: 15.0, top: 18.0, right: 15.0, bottom: 18.0),
           border: OutlineInputBorder(),
@@ -95,7 +95,7 @@ class _GroceryFormState extends State<GroceryForm> {
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           errorMaxLines: 5,
-          labelText: AppLocalizations.of(context)!.grocery_amount,
+          labelText: getString(context).grocery_amount,
           contentPadding:
               EdgeInsets.only(left: 15.0, top: 18.0, right: 15.0, bottom: 18.0),
           border: OutlineInputBorder(),
@@ -125,7 +125,7 @@ class _GroceryFormState extends State<GroceryForm> {
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Text(
-                  AppLocalizations.of(context)!.add,
+                  getString(context).add,
                   style: TextStyle(color: Colors.white),
                 ),
               ),

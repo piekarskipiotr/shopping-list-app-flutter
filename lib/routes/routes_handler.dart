@@ -23,7 +23,7 @@ class RoutesHandler {
                   BlocProvider.value(value: _addEditDeleteGroceryBloc),
                 ],
                 child: DetailsScreen()
-        ), settings: settings);
+            ), settings: settings);
     }
   }
 

@@ -1,11 +1,10 @@
+import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hive/hive.dart';
-import "package:hive_flutter/hive_flutter.dart";
 import 'package:shopping_list_app_flutter/network/bloc/network_bloc.dart';
 import 'package:shopping_list_app_flutter/routes/app_routes.dart';
 import 'package:shopping_list_app_flutter/routes/navigator_service.dart';
@@ -25,7 +24,6 @@ Future<void> main() async {
   ));
 
   //init
-  await Hive.initFlutter();
   await initializeDependencies();
   runApp(MyApp());
 }
@@ -36,29 +34,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AddDeleteShoppingListBloc addDeleteShoppingListBloc = AddDeleteShoppingListBloc();
-    final ShoppingListBloc _shoppingListBloc = ShoppingListBloc(addDeleteShoppingListBloc)..getShoppingLists();
+    final ShoppingListBloc _shoppingListBloc = ShoppingListBloc(addDeleteShoppingListBloc);
     final ArchivedShoppingListBloc archivedShoppingListBloc = ArchivedShoppingListBloc(_shoppingListBloc);
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: _shoppingListBloc),
         BlocProvider.value(value: addDeleteShoppingListBloc),
         BlocProvider.value(value: archivedShoppingListBloc),
-        BlocProvider(create: (_) => NetworkBloc())
+        BlocProvider(create: (_) => NetworkBloc()),
+        BlocProvider.value(value: _shoppingListBloc),
       ],
       child: BlocListener<NetworkBloc, NetworkState>(
         listener: (context, state) {
           if (state is StateChanged) {
             switch (state.source.keys.toList()[0]) {
               case ConnectivityResult.mobile:
-                print('Mobile: Online');
+                log('Mobile: Online', name: 'NetworkConnection');
                 break;
               case ConnectivityResult.wifi:
-                print('WiFi: Online');
+                log('WiFi: Online', name: 'NetworkConnection');
                 break;
               case ConnectivityResult.none:
               default:
-                print('Offline');
+                log('Offline', name: 'NetworkConnection');
             }
           }
         },

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shopping_list_app_flutter/core/app_localizations_helper.dart';
 import 'package:shopping_list_app_flutter/core/validators/name_validation.dart';
 import 'package:shopping_list_app_flutter/feature/home/bloc/add_delete_shopping_list_bloc.dart';
 
 class ShoppingListForm extends StatefulWidget {
-  const ShoppingListForm({Key? key}) : super(key: key);
-
   @override
   _ShoppingListFormState createState() => _ShoppingListFormState();
 }
@@ -21,7 +19,7 @@ class _ShoppingListFormState extends State<ShoppingListForm> {
     super.initState();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _errorMessage = AppLocalizations.of(context)!.name_error_message;
+      _errorMessage = getString(context).name_error_message;
     });
   }
 
@@ -40,7 +38,7 @@ class _ShoppingListFormState extends State<ShoppingListForm> {
     return Center(
         child: Container(
       margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-      child: Text(AppLocalizations.of(context)!.shopping_list_adding_dialog_title, style: TextStyle(fontSize: 20.0)),
+      child: Text(getString(context).shopping_list_adding_dialog_title, style: TextStyle(fontSize: 20.0)),
     ));
   }
 
@@ -55,7 +53,7 @@ class _ShoppingListFormState extends State<ShoppingListForm> {
         maxLength: 18,
         decoration: InputDecoration(
           errorMaxLines: 5,
-          labelText: AppLocalizations.of(context)!.shopping_list_name,
+          labelText: getString(context).shopping_list_name,
           contentPadding:
               EdgeInsets.only(left: 15.0, top: 18.0, right: 15.0, bottom: 18.0),
           border: OutlineInputBorder(),
@@ -85,7 +83,7 @@ class _ShoppingListFormState extends State<ShoppingListForm> {
               child: Padding(
                 padding: EdgeInsets.all(18.0),
                 child: Text(
-                  AppLocalizations.of(context)!.add,
+                  getString(context).add,
                   style: TextStyle(color: Colors.white),
                 ),
               ),

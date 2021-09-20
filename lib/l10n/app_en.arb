@@ -14,6 +14,16 @@
     }
   },
 
+  "delete_message" : "Deleting {item}...",
+  "@delete_message" : {
+    "description" : "Deleting item message",
+    "placeholders" : {
+      "item" : {
+        "type" : "String"
+      }
+    }
+  },
+
   "name_error_message" : "Field should contain at least 1 letter and cannot: contain special characters, be empty",
   "amount_error_message" : "Field cannot: contain special characters, be empty, be equal to 0",
   "shopping_lists" : "Shopping lists",
@@ -28,5 +38,6 @@
   "empty_list_message" : "List is empty, add something to it :)",
   "error_list_message" : "Something went wrong :(",
   "offline_message" : "You don't have access to the Internet, it may result in the lack of access to some functions of the application",
-  "dismiss" : "Dismiss"
+  "dismiss" : "Dismiss",
+  "cancel" : "Cancel"
 }

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shopping_list_app_flutter/core/app_localizations_helper.dart';
 import 'package:shopping_list_app_flutter/data/entities/shopping_list.dart';
 import 'package:shopping_list_app_flutter/feature/home/bloc/archived_shopping_list_bloc.dart';
 import 'package:shopping_list_app_flutter/feature/home/bloc/archived_shopping_list_state.dart';
 import 'package:shopping_list_app_flutter/feature/home/ui/shopping_list_item.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ArchivedShoppingLists extends StatefulWidget {
-  const ArchivedShoppingLists({Key? key}) : super(key: key);
-
   @override
   _ArchivedShoppingListsState createState() => _ArchivedShoppingListsState();
 }
@@ -60,7 +58,7 @@ class _ArchivedShoppingListsState extends State<ArchivedShoppingLists> with Auto
               width: 256,
               height: 256,
               child: SvgPicture.asset("assets/images/empty_image.svg")),
-          Text(AppLocalizations.of(context)!.empty_list_message, style: TextStyle(fontSize: 18.0),),
+          Text(getString(context).empty_list_message, style: TextStyle(fontSize: 18.0),),
         ],
       ),
     );
@@ -93,7 +91,7 @@ class _ArchivedShoppingListsState extends State<ArchivedShoppingLists> with Auto
               width: 256,
               height: 256,
               child: SvgPicture.asset("assets/images/error_image.svg")),
-          Text(AppLocalizations.of(context)!.error_list_message, style: TextStyle(fontSize: 18.0),),
+          Text(getString(context).error_list_message, style: TextStyle(fontSize: 18.0),),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_list_app_flutter/data/repositories/shopping_list_repository.dart';
@@ -29,5 +30,11 @@ class ArchivedShoppingListBloc extends Cubit<ArchivedShoppingListState> {
   Future<void> close() {
     _shoppingListBlocSubscription.cancel();
     return super.close();
+  }
+
+  @override
+  void onChange(Change<ArchivedShoppingListState> change) {
+    log('$change', name: '$runtimeType');
+    super.onChange(change);
   }
 }

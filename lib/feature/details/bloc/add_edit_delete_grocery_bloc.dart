@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_list_app_flutter/data/entities/grocery.dart';
 import 'package:shopping_list_app_flutter/data/repositories/grocery_repository.dart';
@@ -38,5 +40,11 @@ class AddEditDeleteGroceryBloc extends Cubit<AddEditDeleteGroceryState> {
       _shoppingListRepository.decreaseShoppingListGroceriesDoneAmount(grocery.shoppingListId);
     await _shoppingListRepository.decreaseShoppingListGroceriesAmount(grocery.shoppingListId);
     emit(GroceryDeleted(grocery.shoppingListId));
+  }
+
+  @override
+  void onChange(Change<AddEditDeleteGroceryState> change) {
+    log('$change', name: '$runtimeType');
+    super.onChange(change);
   }
 }

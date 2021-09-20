@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shopping_list_app_flutter/core/app_localizations_helper.dart';
 import 'package:shopping_list_app_flutter/data/entities/shopping_list.dart';
 import 'package:shopping_list_app_flutter/feature/home/bloc/shopping_list_bloc.dart';
 import 'package:shopping_list_app_flutter/feature/home/bloc/shopping_list_state.dart';
 import 'package:shopping_list_app_flutter/feature/home/ui/shopping_list_item.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShoppingLists extends StatefulWidget {
-
   @override
   _ShoppingListsState createState() => _ShoppingListsState();
 }
 
-class _ShoppingListsState extends State<ShoppingLists> with AutomaticKeepAliveClientMixin {
+class _ShoppingListsState extends State<ShoppingLists>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -34,7 +34,6 @@ class _ShoppingListsState extends State<ShoppingLists> with AutomaticKeepAliveCl
               return _buildListView(shoppingLists, _bloc);
             else
               return _buildEmptyListView(context);
-
           } else {
             return _buildErrorView(context);
           }
@@ -57,9 +56,11 @@ class _ShoppingListsState extends State<ShoppingLists> with AutomaticKeepAliveCl
           SizedBox(
               width: 256,
               height: 256,
-              child: SvgPicture.asset("assets/images/empty_image.svg")
+              child: SvgPicture.asset("assets/images/empty_image.svg")),
+          Text(
+            getString(context).empty_list_message,
+            style: TextStyle(fontSize: 18.0),
           ),
-          Text(AppLocalizations.of(context)!.empty_list_message, style: TextStyle(fontSize: 18.0),),
         ],
       ),
     );
@@ -72,9 +73,7 @@ class _ShoppingListsState extends State<ShoppingLists> with AutomaticKeepAliveCl
         physics: BouncingScrollPhysics(),
         itemCount: data.length,
         itemBuilder: (context, index) {
-          return ShoppingListItem(
-            shoppingList: data[index],
-          );
+          return ShoppingListItem(shoppingList: data[index]);
         },
         separatorBuilder: (context, index) {
           return Divider(
@@ -94,7 +93,10 @@ class _ShoppingListsState extends State<ShoppingLists> with AutomaticKeepAliveCl
               width: 256,
               height: 256,
               child: SvgPicture.asset("assets/images/error_image.svg")),
-          Text(AppLocalizations.of(context)!.error_list_message, style: TextStyle(fontSize: 18.0),),
+          Text(
+            getString(context).error_list_message,
+            style: TextStyle(fontSize: 18.0),
+          ),
         ],
       ),
     );
